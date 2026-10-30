@@ -14,6 +14,16 @@
 - Path alias `@` → `src/` is set in both `vite.config.ts` and `tsconfig.app.json`; keep them in sync if changed.
 - Router is `react-router` (v8 unified package, not `react-router-dom`). Routes are defined inline in `src/App.tsx`; new pages go in `src/pages/*` and are typically wrapped in `DashboardLayout`.
 
+## API layer
+
+- Two deps are already installed for this: `axios` and `@tanstack/react-query`. Use them — don't hand-roll `fetch` or add another client.
+- `VITE_API_URL` is the only env var (`src/lib/api/client.ts`, falls back to `/api` when unset). Copy `.env.example` → `.env.local`; `*.local` is gitignored.
+- All request paths live in `src/lib/api/endpoints.ts`. Don't inline URL strings in components or resource modules.
+- Per-resource module = exported types + a query-key object + `useX()` hooks (`useQuery`/`useMutation` with `invalidateQueries` on success). `src/lib/api/users.ts` is the template to copy.
+- `queryClient` is `src/lib/api/query-client.ts`, mounted via `QueryClientProvider` in `src/main.tsx`.
+- Auth is a request interceptor reading `localStorage["token"]` as a bearer. There is no 401 refresh/retry queue yet — if a resource needs it, add one response interceptor, not per-call handling.
+- No error-normalization layer: React Query surfaces raw `AxiosError`s to `error`/`onError`.
+
 ## TypeScript strictness
 
 - `verbatimModuleSyntax` is on — use `import type { ... }` for type-only imports or builds fail.
@@ -24,3 +34,5 @@
 
 - `src/components/ui/` — shadcn-generated primitives (avoid hand edits).
 - `src/components/{layout,shared}/` and `src/layouts/` — app-owned composition built on the primitives.
+- `src/lib/api/` — HTTP client, endpoint paths, query client, one module per resource.
+- `src/lib/utils.ts` — `cn` re-export only.
