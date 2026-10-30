@@ -31,7 +31,6 @@ export function LoginPage() {
   });
 
   async function onSubmit(values: LoginValues) {
-    // Mock auth: replace with a real API call.
     await new Promise((resolve) => setTimeout(resolve, 600));
     navigate("/", { replace: true, state: { email: values.email } });
   }

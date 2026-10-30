@@ -64,7 +64,7 @@ export function AppHeader({ onMenuClick }: AppHeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b bg-background/95 px-4 backdrop-blur sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b bg-sidebar px-4 backdrop-blur sm:px-6">
       <div className="flex min-w-0 items-center gap-3">
         <Button
           variant="ghost"
