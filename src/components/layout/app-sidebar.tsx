@@ -32,6 +32,9 @@ type AppSidebarProps = {
   onNavigate?: () => void;
 };
 
+const itemClass =
+  "flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors";
+
 export function AppSidebar({
   currentPath = "/",
   onNavigate,
@@ -39,7 +42,7 @@ export function AppSidebar({
   return (
     <aside className="flex h-full w-full flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
       <div className="flex h-16 shrink-0 items-center gap-2.5 border-b border-sidebar-border px-4">
-        <div className="flex size-8 items-center justify-center rounded-none bg-primary text-primary-foreground">
+        <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
           <Command className="size-4" />
         </div>
 
@@ -72,10 +75,10 @@ export function AppSidebar({
                     onClick={onNavigate}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "flex items-center gap-2.5 rounded-none px-2.5 py-2 text-[13px] transition-colors",
+                      itemClass,
                       active
-                        ? "bg-sidebar-accent font-medium text-sidebar-text shadow-[inset_2px_0_0_var(--sidebar-primary)]"
-                        : "text-sidebar-text hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+                        ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+                        : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
                     )}
                   >
                     <Icon className="size-3.5 shrink-0" />
@@ -92,7 +95,10 @@ export function AppSidebar({
         <a
           href="/settings"
           onClick={onNavigate}
-          className="flex items-center gap-2.5 rounded-none px-2.5 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
+          className={cn(
+            itemClass,
+            "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+          )}
         >
           <Settings className="size-3.5 shrink-0" />
           Settings
@@ -101,10 +107,13 @@ export function AppSidebar({
         <a
           href="/support"
           onClick={onNavigate}
-          className="flex items-center gap-2.5 rounded-none px-2.5 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
+          className={cn(
+            itemClass,
+            "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+          )}
         >
           <LifeBuoy className="size-3.5 shrink-0" />
-          Help & Support
+          Help &amp; Support
         </a>
       </div>
     </aside>
